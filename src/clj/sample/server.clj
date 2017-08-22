@@ -1,4 +1,4 @@
-(ns server
+(ns sample.server
   (:require
    [bidi.ring :as bidi]
    [hiccup.core :refer [html]]
@@ -33,8 +33,8 @@
      [:body
       [:div {:id "app"}]
       [:h1 "The mighty header"]
-      [:script {:src "/env/dev.js"}]
-      [:script "app.init"]]]))
+      [:script {:src "/main.js"}]
+      [:script "sample.app.init()"]]]))
 
 (defn serve-index [_]
   (->
@@ -53,7 +53,7 @@
   [handler]
   (if (keyword? handler) serve-index handler))
 
-(defn make-app-handler []
+(def app-handler
   (let [handler (-> (routes)
                     (bidi/make-handler spa-handler)
                     (wrap-resource "")
